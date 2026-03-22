@@ -1,9 +1,7 @@
-import Image from "next/image";
+import LMSHomePage from "@/components/home/LMSHome";
 
 export default function Home() {
   return (
-<div>
-  <h1>Hello ts</h1>
-</div>
+<LMSHomePage></LMSHomePage>
   );
 }
