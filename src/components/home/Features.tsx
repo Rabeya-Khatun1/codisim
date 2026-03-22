@@ -1,29 +1,126 @@
+"use client";
+
 import React from 'react';
+import { 
+  Headset, 
+  Sparkles, 
+  Rocket, 
+  Trophy, 
+  Infinity, 
+  Users,
+  CheckCircle
+} from 'lucide-react';
 
 const Features = () => {
-    return (
-            <section className="py-20 px-6 max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">কেন আমাদের প্ল্যাটফর্ম সেরা?</h2>
-          <div className="h-1 w-20 bg-blue-600 mx-auto mt-4 rounded-full"></div>
+  // আপনার কাস্টম কালার
+  const primaryColor = "#FFC570";
+
+  const features = [
+    {
+      icon: Headset,
+      title: "24/7 Live Support",
+      description: "Round-the-clock assistance from our expert support team via chat, email, and video calls.",
+      stats: "< 2 min",
+      statLabel: "Avg Response Time",
+    },
+    {
+      icon: Sparkles,
+      title: "Cutting-Edge Curriculum",
+      description: "Stay ahead with courses updated quarterly to match industry demands and latest tech trends.",
+      stats: "95%",
+      statLabel: "Content Freshness",
+    },
+    {
+      icon: Rocket,
+      title: "Career Acceleration",
+      description: "Fast-track your career with job placement support, resume reviews, and interview prep.",
+      stats: "75%",
+      statLabel: "Placement Rate",
+    },
+    {
+      icon: Trophy,
+      title: "Industry Recognition",
+      description: "Earn certificates recognized by top companies and add them to your professional profile.",
+      stats: "50K+",
+      statLabel: "Certificates Issued",
+    },
+    {
+      icon: Infinity,
+      title: "Lifetime Access",
+      description: "One-time payment gives you forever access to course materials and future updates.",
+      stats: "Unlimited",
+      statLabel: "Access Duration",
+    },
+    {
+      icon: Users,
+      title: "Vibrant Community",
+      description: "Join 100,000+ learners in our exclusive community for networking and collaboration.",
+      stats: "100K+",
+      statLabel: "Active Members",
+    }
+  ];
+
+  return (
+    <section className="py-24 px-6 bg-white text-slate-900 relative">
+      <div className="max-w-7xl mx-auto relative z-10">
+        
+        {/* Header */}
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-5xl font-extrabold mb-6 tracking-tight text-slate-900">
+            The Ultimate <span style={{ color: primaryColor }}>Learning</span> Experience
+          </h2>
+          <p className="text-slate-500 text-lg max-w-2xl mx-auto leading-relaxed">
+            Join thousands of successful professionals who transformed their careers with our award-winning methodology.
+          </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-8">
-          {[
-            { title: "লাইভ সাপোর্ট", desc: "প্রতিদিন নির্দিষ্ট সময়ে আমাদের সাপোর্ট টিমের সাথে লাইভ মিটিং।" },
-            { title: "আপডেটেড কারিকুলাম", desc: "সবসময় লেটেস্ট টেকনোলজি এবং ইন্ডাস্ট্রি স্ট্যান্ডার্ড মেনে কোর্স।" },
-            { title: "জব প্লেসমেন্ট", desc: "ভালো রেজাল্ট করা শিক্ষার্থীদের জন্য ইন্টার্নশিপ ও জবের সুযোগ।" }
-          ].map((feature, index) => (
-            <div key={index} className="p-8 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all">
-              <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-6 font-bold">
-                0{index + 1}
+
+        {/* Features Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className="group relative bg-white rounded-2xl p-4 transition-all duration-300 border border-slate-100 hover:border-primary hover:shadow-2xl hover:shadow-[#FFC570]/10 overflow-hidden"
+            >
+              {/* Feature Icon */}
+              <div 
+                className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110"
+                style={{ backgroundColor: `${primaryColor}15` }}
+              >
+                <feature.icon style={{ color: primaryColor }} size={28} />
               </div>
-              <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{feature.desc}</p>
+              
+              {/* Content */}
+              <h3 className="text-xl font-bold mb-3 text-slate-800 transition-colors group-hover:text-black">
+                {feature.title}
+              </h3>
+              <p className="text-slate-500 leading-relaxed mb-2 text-sm">
+                {feature.description}
+              </p>
+              
+              {/* Stats Box */}
+              <div className="pt-3 border-t border-slate-50">
+                <div 
+                  className="text-2xl font-black mb-0.5"
+                  style={{ color: primaryColor }}
+                >
+                  {feature.stats}
+                </div>
+                <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">
+                  {feature.statLabel}
+                </div>
+              </div>
+
+              {/* Decorative Line on Hover */}
+              <div 
+                className="absolute bottom-0 left-0 h-1 w-0 group-hover:w-full transition-all duration-500"
+                style={{ backgroundColor: primaryColor }}
+              ></div>
             </div>
           ))}
         </div>
-      </section>
-    );
+      </div>
+    </section>
+  );
 };
 
 export default Features;

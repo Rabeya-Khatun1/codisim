@@ -1,24 +1,103 @@
 import React from 'react';
+import { Star } from 'lucide-react';
+import Image from 'next/image';
 
 const Testimonial = () => {
-    return (
-              <section className="py-20 px-6 bg-white">
-        <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-12">সফল শিক্ষার্থীদের গল্প</h2>
-            <div className="relative p-8 md:p-12 bg-slate-50 rounded-3xl">
-                <span className="absolute top-4 left-6 text-6xl text-blue-200 font-serif">“</span>
-                <p className="text-lg md:text-xl text-gray-700 italic relative z-10">
-                    "আমি জিরো নলেজ নিয়ে শুরু করেছিলাম। মেন্টরদের গাইডলাইন এবং প্রজেক্ট বেসড লার্নিং আমাকে এখন একজন প্রফেশনাল হিসেবে গড়ে তুলেছে।"
-                </p>
-                <div className="mt-8">
-                    <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4"></div>
-                    <h4 className="font-bold text-gray-900">আরিফ আহমেদ</h4>
-                    <p className="text-sm text-gray-500 font-medium">ফুল-স্ট্যাক ডেভেলপার @ টেক-আইটি</p>
-                </div>
-            </div>
+  const testimonials = [
+    {
+      id: 1,
+      name: "Alex Rivera",
+      role: "Frontend Developer",
+      company: "Google",
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop",
+      rating: 5,
+      content: "The curriculum is world-class. I landed my dream job within months."
+    },
+    {
+      id: 2,
+      name: "Sarah Chen",
+      role: "UI/UX Designer",
+      company: "Meta",
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop",
+      rating: 5,
+      content: "Hands-on projects gave me confidence to build real products."
+    },
+    {
+      id: 3,
+      name: "James Wilson",
+      role: "Data Scientist",
+      company: "Amazon",
+      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop",
+      rating: 4,
+      content: "Mentors are supportive and the learning path is very clear."
+    }
+  ];
+
+  const renderStars = (rating: number) => {
+    return [...Array(5)].map((_, i) => (
+      <Star
+        key={i}
+        size={14}
+        className={i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}
+      />
+    ));
+  };
+
+  return (
+    <section className="pb-20 px-6">
+      <div className="max-w-6xl mx-auto">
+
+        {/* Header */}
+        <div className="text-center mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+            What Our Students Say
+          </h2>
+          <p className="text-gray-500 max-w-xl mx-auto">
+            Real feedback from learners who transformed their careers.
+          </p>
         </div>
-      </section>
-    );
+
+        {/* Cards */}
+        <div className="grid md:grid-cols-3 gap-6">
+          {testimonials.map((t) => (
+            <div
+              key={t.id}
+              className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition"
+            >
+              {/* Stars */}
+              <div className="flex gap-1 mb-4">
+                {renderStars(t.rating)}
+              </div>
+
+              {/* Content */}
+              <p className="text-gray-600 mb-6 italic text-sm leading-relaxed">
+                "{t.content}"
+              </p>
+
+              {/* User */}
+              <div className="flex items-center gap-3">
+  <Image
+    src={t.image}
+    alt={t.name}
+    width={48}
+    height={48}
+    className="rounded-full object-cover"
+  />
+  <div>
+                  <h4 className="font-semibold text-gray-900 text-sm">
+                    {t.name}
+                  </h4>
+                  <p className="text-xs text-gray-500">
+                    {t.role} • {t.company}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Testimonial;

@@ -7,14 +7,15 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-  extend: {
-    colors: {
-      primary: "#2563eb",
-      secondary: "#7c3aed",
+    extend: {
+      colors: {
+        primary: "#FFC570",
+        secondary: "#7c3aed",
+      },
     },
   },
-},
-darkMode: "class",
+  darkMode: "class",
   plugins: [],
 };
+
 export default config;
