@@ -2,6 +2,7 @@
 import { Menu, X, Home, BookOpen, Users, LayoutDashboard, LogIn } from 'lucide-react';
 import React, { useState } from 'react';
 import Button from '../buttons/Button';
+import Link from 'next/link';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -76,10 +77,10 @@ const Navbar = () => {
               </a>
             ))}
             <div className="pt-6 px-4">
-              <Button className="w-full flex items-center justify-center gap-3 bg-[#FFC570] text-slate-950 py-4 rounded-2xl font-bold text-lg shadow-lg shadow-orange-100">
+              <Link href={'/login'}><Button className="w-full flex items-center justify-center gap-3 bg-[#FFC570] text-slate-950 py-4 rounded-2xl font-bold text-lg shadow-lg shadow-orange-100">
                 <LogIn size={20} />
                 Login
-              </Button>
+              </Button></Link>
             </div>
           </div>
         </div>
