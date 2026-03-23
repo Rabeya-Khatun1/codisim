@@ -1,5 +1,5 @@
 "use client"
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Home, BookOpen, Users, LayoutDashboard, LogIn } from 'lucide-react';
 import React, { useState } from 'react';
 import Button from '../buttons/Button';
 
@@ -7,38 +7,44 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
-    { name: 'Home', href: '#' },
-    { name: 'Courses', href: '#' },
-    { name: 'Mentors', href: '#' },
-    { name: 'Blog', href: '#' },
+    { name: 'Home', href: '/', icon: <Home size={18} /> },
+    { name: 'Courses', href: '/courses', icon: <BookOpen size={18} /> },
+    { name: 'Contact', href: '/contact', icon: <Users size={18} /> },
+    { name: 'About', href: '/about', icon: <LayoutDashboard size={18} /> },
   ];
 
   return (
     <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-100 transition-all duration-300">
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12">
+      <div className="max-w-[1440px] mx-auto px-6">
         <div className="flex justify-between items-center h-20"> 
+          
+          {/* Logo Section */}
           <div className="flex items-center space-x-3 group cursor-pointer">
-            <div className="w-11 h-11 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:rotate-6 transition-transform duration-300">
-              <span className="text-white font-bold text-2xl uppercase tracking-tighter">L</span>
+            <div className="w-11 h-11 bg-[#FFC570] rounded-2xl flex items-center justify-center shadow-lg shadow-[#FFC570]/20 group-hover:rotate-6 transition-transform duration-300">
+              <span className="text-slate-900 font-bold text-2xl uppercase tracking-tighter">L</span>
             </div>
-            <span className="font-extrabold text-2xl tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="font-extrabold text-2xl tracking-tight bg-blue-500 bg-clip-text text-transparent">
               LearnHub
             </span>
           </div>
+
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-10">
             {navLinks.map((link) => (
               <a 
                 key={link.name}
                 href={link.href} 
-                className="text-[15px] font-semibold text-gray-600 hover:text-blue-600 transition-colors relative group"
+                className="flex items-center gap-2 text-[15px] font-semibold text-gray-600 hover:text-[#FFC570] transition-colors relative group"
               >
+                {link.icon}
                 {link.name}
-  
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
+                {/* Underline Hover Effect */}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FFC570] transition-all group-hover:w-full"></span>
               </a>
             ))}
             
-            <Button className="bg-blue-600 text-white px-8 py-3 rounded-2xl font-bold text-[15px] hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-100 active:scale-95 transition-all">
+            <Button className="flex items-center gap-2 bg-[#FFC570] text-slate-950 px-8 py-3 rounded-2xl font-bold text-[15px] hover:bg-orange-400 hover:shadow-xl hover:shadow-orange-100 active:scale-95 transition-all">
+              <LogIn size={18} />
               Login
             </Button>
           </div>
@@ -63,13 +69,15 @@ const Navbar = () => {
               <a 
                 key={link.name}
                 href={link.href} 
-                className="block px-4 py-4 text-lg font-semibold text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-2xl transition-all"
+                className="flex items-center gap-4 px-4 py-4 text-lg font-semibold text-gray-700 hover:bg-orange-50 hover:text-[#FFC570] rounded-2xl transition-all border-2 border-transparent hover:border-[#FFC570]"
               >
+                <span className="text-[#FFC570]">{link.icon}</span>
                 {link.name}
               </a>
             ))}
             <div className="pt-6 px-4">
-              <Button className="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold text-lg shadow-lg">
+              <Button className="w-full flex items-center justify-center gap-3 bg-[#FFC570] text-slate-950 py-4 rounded-2xl font-bold text-lg shadow-lg shadow-orange-100">
+                <LogIn size={20} />
                 Login
               </Button>
             </div>

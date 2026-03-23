@@ -1,11 +1,11 @@
+"use client"
+import Courses from '@/components/home/Courses';
 import React from 'react';
 
-const Courses = () => {
+const CoursesPage = () => {
     return (
-        <div>
-            this is courses
-        </div>
+<Courses></Courses>
     );
 };
 
-export default Courses;
+export default CoursesPage;
