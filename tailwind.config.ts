@@ -6,14 +6,14 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  theme: {
-    extend: {
-      colors: {
-        primary: "#FFC570",
-        secondary: "#7c3aed",
-      },
+theme: {
+  extend: {
+    colors: {
+      primary: "var(--primary)",
+      secondary: "var(--secondary)",
     },
   },
+},
   darkMode: "class",
   plugins: [],
 };

@@ -1,26 +1,12 @@
 "use client";
 
-import React, { useState } from 'react';
-import { 
-
-  Star,
-  ChevronDown,
-  Menu,
-  X,
-  ArrowRight,
-} from 'lucide-react';
+import React from 'react';
 import Hero from './Hero';
 import Features from './Features';
 import Courses from './Courses';
-import Button from '../buttons/Button';
 import Testimonial from './Testimonial';
 import FAQ from './FAQ';
 import CTASection from './CTA';
-
-interface FAQItem {
-  q: string;
-  a: string;
-}
 
 interface Testimonial {
   id: number;

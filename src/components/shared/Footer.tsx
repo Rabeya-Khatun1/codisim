@@ -10,8 +10,9 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="space-y-4">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-900/20">
-                <span className="text-white font-bold text-xl">L</span>
+              {/* Direct Hex Code for background and shadow */}
+              <div className="w-10 h-10 bg-gradient-to-tr from-[#FFC570] to-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-[#FFC570]/20">
+                <span className="text-slate-900 font-bold text-xl">L</span>
               </div>
               <span className="font-bold text-2xl text-white tracking-tight">LearnHub</span>
             </div>
@@ -24,10 +25,10 @@ const Footer = () => {
           <div>
             <h4 className="font-bold text-white mb-6 uppercase text-xs tracking-widest">Company</h4>
             <ul className="space-y-4 text-sm">
-              <li><a href="#" className="hover:text-blue-400 transition-colors">About Us</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Careers</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Success Stories</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Our Blog</a></li>
+              <li><a href="#" className="hover:text-[#FFC570] transition-colors">About Us</a></li>
+              <li><a href="#" className="hover:text-[#FFC570] transition-colors">Careers</a></li>
+              <li><a href="#" className="hover:text-[#FFC570] transition-colors">Success Stories</a></li>
+              <li><a href="#" className="hover:text-[#FFC570] transition-colors">Our Blog</a></li>
             </ul>
           </div>
 
@@ -35,10 +36,10 @@ const Footer = () => {
           <div>
             <h4 className="font-bold text-white mb-6 uppercase text-xs tracking-widest">Support</h4>
             <ul className="space-y-4 text-sm">
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Help Center</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Contact Support</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Terms of Service</a></li>
+              <li><a href="#" className="hover:text-[#FFC570] transition-colors">Help Center</a></li>
+              <li><a href="#" className="hover:text-[#FFC570] transition-colors">Contact Support</a></li>
+              <li><a href="#" className="hover:text-[#FFC570] transition-colors">Privacy Policy</a></li>
+              <li><a href="#" className="hover:text-[#FFC570] transition-colors">Terms of Service</a></li>
             </ul>
           </div>
 
@@ -46,16 +47,16 @@ const Footer = () => {
           <div>
             <h4 className="font-bold text-white mb-6 uppercase text-xs tracking-widest">Connect</h4>
             <div className="flex gap-4 mb-6">
-              <a href="#" className="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
+              <a href="#" className="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center hover:bg-[#FFC570] hover:text-slate-950 transition-all duration-300">
                 <Facebook size={18} />
               </a>
-              <a href="#" className="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
+              <a href="#" className="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center hover:bg-[#FFC570] hover:text-slate-950 transition-all duration-300">
                 <Twitter size={18} />
               </a>
-              <a href="#" className="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
+              <a href="#" className="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center hover:bg-[#FFC570] hover:text-slate-950 transition-all duration-300">
                 <Linkedin size={18} />
               </a>
-              <a href="#" className="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all">
+              <a href="#" className="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center hover:bg-[#FFC570] hover:text-slate-950 transition-all duration-300">
                 <Youtube size={18} />
               </a>
             </div>
@@ -67,8 +68,8 @@ const Footer = () => {
         <div className="border-t border-slate-900 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs tracking-wide">
           <p>&copy; {new Date().getFullYear()} LearnHub. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors">Sitemap</a>
-            <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
+            <a href="#" className="hover:text-[#FFC570] transition-colors">Sitemap</a>
+            <a href="#" className="hover:text-[#FFC570] transition-colors">Cookie Policy</a>
           </div>
         </div>
       </div>
