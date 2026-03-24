@@ -6,36 +6,57 @@ import { useState } from "react";
 import Button from "../buttons/Button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface RegisterFormData {
   username: string;
   email: string;
   password: string;
   confirmPassword: string;
+  role: "student" | "teacher";
+  phone: string;
+  profileImage: File | null;
 }
 
 const RegisterForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const router = useRouter();
-  
+
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     watch,
     formState: { errors },
-  } = useForm<RegisterFormData>();
+  } = useForm<RegisterFormData>({
+    defaultValues: {
+      profileImage: null,
+    },
+  });
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setPreviewImage(URL.createObjectURL(file));
+    setValue("profileImage", file);
+  };
 
   const onSubmit = async (data: RegisterFormData) => {
     if (data.password !== data.confirmPassword) {
-      alert("Password do not match!");
+      alert("Passwords do not match!");
       return;
     }
 
-    const payload: IUser = {
+    const payload: IUser & { role: string; phone?: string; profileImage?: File } = {
       name: data.username,
       email: data.email,
       password: data.password,
+      role: data.role,
+      phone: data.phone,
+      profileImage: data.profileImage ?? undefined,
     };
 
     setIsSubmitting(true);
@@ -45,7 +66,8 @@ const RegisterForm = () => {
 
       if (result.success) {
         reset();
-        router.push('/')
+        setPreviewImage(null);
+        router.push("/login");
       }
     } catch (error) {
       console.error(error);
@@ -56,182 +78,161 @@ const RegisterForm = () => {
   };
 
   return (
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-md bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-2xl"
-      >
-        {/* Header with gradient */}
-        <div className="bg-primary px-8 py-6">
-          <h2 className="text-3xl font-bold text-white text-center">
-            Create Account
-          </h2>
-          <p className="text-blue-100 text-center mt-2 text-sm">
-            Join us today and start your journey
-          </p>
-        </div>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-full max-w-lg mx-auto bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl border border-gray-100 overflow-hidden"
+    >
+      {/* Header */}
+      <div className="bg-primary px-10 py-8 text-center">
+        <h2 className="text-3xl font-bold text-white">Create Account</h2>
+        <p className="text-blue-100 mt-2 text-sm">
+          Join us today and start your journey
+        </p>
+      </div>
 
-        {/* Form Content */}
-        <div className="p-8">
-          <div className="space-y-5">
-            {/* Username Field */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Username
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  placeholder="Enter your username"
-                  {...register("username", { required: "Username is required" })}
-                  className={`w-full pl-10 pr-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-200 ${
-                    errors.username
-                      ? "border-red-300 focus:ring-red-500 focus:border-red-500"
-                      : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                  }`}
-                />
-              </div>
-              {errors.username && (
-                <p className="mt-1 text-red-500 text-xs flex items-center gap-1">
-                  <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  {errors.username.message}
-                </p>
-              )}
-            </div>
+      {/* Form Content */}
+      <div className="p-8 grid gap-6">
 
-            {/* Email Field */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Email Address
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  {...register("email", { required: "Email is required" })}
-                  className={`w-full pl-10 pr-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-200 ${
-                    errors.email
-                      ? "border-red-300 focus:ring-red-500 focus:border-red-500"
-                      : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                  }`}
-                />
-              </div>
-              {errors.email && (
-                <p className="mt-1 text-red-500 text-xs flex items-center gap-1">
-                  <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  {errors.email.message}
-                </p>
-              )}
-            </div>
-
-            {/* Password Field */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6-4h12a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6a2 2 0 012-2zm10-4V6a4 4 0 00-8 0v4h8z" />
-                  </svg>
-                </div>
-                <input
-                  type="password"
-                  placeholder="Create a strong password"
-                  {...register("password", { required: "Password is required" })}
-                  className={`w-full pl-10 pr-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-200 ${
-                    errors.password
-                      ? "border-red-300 focus:ring-red-500 focus:border-red-500"
-                      : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                  }`}
-                />
-              </div>
-              {errors.password && (
-                <p className="mt-1 text-red-500 text-xs flex items-center gap-1">
-                  <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
-
-            {/* Confirm Password Field */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Confirm Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                </div>
-                <input
-                  type="password"
-                  placeholder="Confirm your password"
-                  {...register("confirmPassword", {
-                    required: "Confirm password is required",
-                  })}
-                  className={`w-full pl-10 pr-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-200 ${
-                    errors.confirmPassword
-                      ? "border-red-300 focus:ring-red-500 focus:border-red-500"
-                      : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                  }`}
-                />
-              </div>
-              {errors.confirmPassword && (
-                <p className="mt-1 text-red-500 text-xs flex items-center gap-1">
-                  <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  {errors.confirmPassword.message}
-                </p>
-              )}
-            </div>
+        {/* Username + Email */}
+        <div className="grid gap-6 md:grid-cols-2">
+          {/* Username */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Username</label>
+            <input
+              type="text"
+              placeholder="Enter username"
+              {...register("username", { required: "Username is required" })}
+              className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                errors.username ? "border-red-300 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+              }`}
+            />
+            {errors.username && <p className="text-red-500 text-xs mt-1">{errors.username.message}</p>}
           </div>
 
-          {/* Submit Button */}
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            className={`w-full mt-8 text-white py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-              isSubmitting ? "opacity-70 cursor-not-allowed" : ""
-            }`}
-          >
-            {isSubmitting ? (
-              <span className="flex items-center justify-center gap-2">
-                <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Creating Account...
-              </span>
-            ) : (
-              "Create Account"
-            )}
-          </Button>
-
-          {/* Footer */}
-          <p className="text-center text-sm text-gray-600 mt-6">
-            Already have an account?{" "}
-           <Link className="text-primary" href={'/login'}>Sign In</Link>
-          </p>
+          {/* Email */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+            <input
+              type="email"
+              placeholder="Enter email"
+              {...register("email", { required: "Email is required" })}
+              className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                errors.email ? "border-red-300 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+              }`}
+            />
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+          </div>
         </div>
-      </form>
+
+        {/* Phone + Role */}
+        <div className="grid gap-6 md:grid-cols-2">
+          {/* Phone */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
+            <input
+              type="tel"
+              placeholder="01XXXXXXXXX"
+              {...register("phone", { required: "Phone number is required" })}
+              className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                errors.phone ? "border-red-300 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+              }`}
+            />
+            {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
+          </div>
+
+          {/* Role */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Role</label>
+            <select
+              {...register("role", { required: "Select a role" })}
+              className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                errors.role ? "border-red-300 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+              }`}
+            >
+              <option value="">Select Role</option>
+              <option value="student">Student</option>
+              <option value="teacher">Teacher</option>
+            </select>
+            {errors.role && <p className="text-red-500 text-xs mt-1">{errors.role.message}</p>}
+          </div>
+        </div>
+
+        {/* Profile Image */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Profile Image</label>
+          <label className="w-full h-48 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:border-primary hover:bg-primary/10 transition-colors">
+            {previewImage ? (
+                <Image
+    src={previewImage}
+    alt="Profile Preview"
+    width={128}
+    height={128}
+    className="rounded-full object-cover border-2 border-gray-200"
+  />
+            ) : (
+              <span className="text-gray-400 text-sm">Click or drag to upload</span>
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageChange}
+            />
+          </label>
+          {previewImage && (
+            <p className="text-xs text-gray-500 mt-2">Click box to change image</p>
+          )}
+        </div>
+
+        {/* Password + Confirm Password */}
+        <div className="grid gap-6 md:grid-cols-2">
+          {/* Password */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+            <input
+              type="password"
+              placeholder="Create password"
+              {...register("password", { required: "Password is required" })}
+              className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                errors.password ? "border-red-300 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+              }`}
+            />
+            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
+          </div>
+
+          {/* Confirm Password */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Confirm Password</label>
+            <input
+              type="password"
+              placeholder="Confirm password"
+              {...register("confirmPassword", { required: "Confirm password is required" })}
+              className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                errors.confirmPassword ? "border-red-300 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+              }`}
+            />
+            {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>}
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className={`w-full py-3 text-white rounded-lg font-semibold ${
+            isSubmitting ? "opacity-70 cursor-not-allowed" : "bg-primary hover:shadow-lg"
+          }`}
+        >
+          {isSubmitting ? "Creating Account..." : "Create Account"}
+        </Button>
+
+        {/* Footer */}
+        <p className="text-center text-sm text-gray-600 mt-2">
+          Already have an account?{" "}
+          <Link href="/login" className="text-primary font-medium">Sign In</Link>
+        </p>
+      </div>
+    </form>
   );
 };
 

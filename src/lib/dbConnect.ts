@@ -11,6 +11,7 @@ if(!dbName){
 
 export const collections = {
     USERS: "users",
+  COURSES: "courses",
 
 } as const;
 
