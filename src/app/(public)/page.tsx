@@ -1,11 +1,10 @@
+import LMSHomePage from '@/components/home/LMSHome';
 import React from 'react';
 
-const Home = () => {
+const MainHomePage = () => {
     return (
-        <div>
-            this is public page
-        </div>
+        <LMSHomePage></LMSHomePage>
     );
 };
 
-export default Home;
+export default MainHomePage;
