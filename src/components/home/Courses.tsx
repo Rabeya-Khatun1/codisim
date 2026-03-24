@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getCourses } from "@/app/api/courses/route";
 import { ChevronLeft, ChevronRight, Star, PlayCircle, Clock } from "lucide-react";
 import Button from "../buttons/Button";
 import Image from "next/image";
 import Link from "next/link";
 import CourseSkeleton from "../skeletons/CourseDetailsSkeletons";
+import { getCourses } from "@/lib/db/courses";
 
 interface Course {
   _id: string;

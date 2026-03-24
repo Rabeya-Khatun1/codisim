@@ -51,13 +51,15 @@ const RegisterForm = () => {
     }
 
     const payload: IUser & { role: string; phone?: string; profileImage?: File } = {
-      name: data.username,
-      email: data.email,
-      password: data.password,
-      role: data.role,
-      phone: data.phone,
-      profileImage: data.profileImage ?? undefined,
-    };
+  name: data.username,
+  email: data.email,
+  password: data.password,
+  role: data.role,
+  phone: data.phone,
+  profileImage: data.profileImage || undefined,
+  status: "pending",                  
+  createdAt: new Date().toISOString(),
+};
 
     setIsSubmitting(true);
     try {

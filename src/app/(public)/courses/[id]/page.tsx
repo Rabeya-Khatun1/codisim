@@ -1,10 +1,9 @@
-import { getSingleCourse } from "@/app/api/courses/[id]/route";
 import Image from "next/image";
-import Link from "next/link";
 import { 
-  ArrowLeft, Users, Star, Clock, Globe, ShieldCheck, 
-  Zap, ChevronRight, Play, Download
+ Star, Clock, Globe, ShieldCheck, 
+  ChevronRight, Play, Download
 } from "lucide-react";
+import { getSingleCourse } from "@/lib/db/courses";
 
 interface Props {
   params: { id: string };

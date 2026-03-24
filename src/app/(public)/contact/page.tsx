@@ -87,7 +87,7 @@ const Contact = () => {
                             <div className="space-y-2">
                                 <label className="text-sm font-semibold text-slate-700">Message</label>
                                 <textarea 
-                                    rows="4" 
+                                    rows={4}
                                     placeholder="Write your message here..." 
                                     className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:border-[#FFC570] focus:ring-4 focus:ring-[#FFC570]/10 transition-all resize-none"
                                 ></textarea>
