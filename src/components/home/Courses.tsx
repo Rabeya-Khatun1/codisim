@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, Star, PlayCircle, Clock } from "lucide-react
 import Button from "../buttons/Button";
 import Image from "next/image";
 import Link from "next/link";
+import CourseSkeleton from "../skeletons/CourseDetailsSkeletons";
 
 interface Course {
   _id: string;
@@ -23,16 +24,20 @@ const Courses = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
   const limit = 8;
 
   const fetchCourses = async () => {
     try {
+      setLoading(true)
       const res = await getCourses(page, limit); // server function
       setCourses(res.courses);
       setTotalPages(Math.ceil(res.total / limit));
     } catch (err) {
       console.error(err);
-    }
+    } finally {
+    setLoading(false);
+  }
   };
 
   useEffect(() => {
@@ -66,7 +71,9 @@ const Courses = () => {
 
         {/* Courses Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {courses.map((course) => (
+  {loading
+    ? Array.from({ length: 8 }).map((_, i) => <CourseSkeleton key={i} ></CourseSkeleton>)
+    : courses.map((course) => (
             <div key={course._id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
               <div className="relative h-40">
                 <Image
@@ -95,9 +102,10 @@ const Courses = () => {
                 <p className="text-gray-500 text-sm mb-2">{course.instructor}</p>
                 <div className="flex justify-between items-center">
                   <span className="font-bold">{course.price}</span>
+                 <Link href={`/courses/${course._id}`}>
                   <Button className="flex items-center gap-1 text-sm px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700">
                     <PlayCircle size={16} /> View
-                  </Button>
+                  </Button></Link>
                 </div>
               </div>
             </div>
