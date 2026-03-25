@@ -15,7 +15,6 @@ interface RegisterFormData {
   confirmPassword: string;
   role: "student" | "teacher";
   phone: string;
-  profileImage: File | null;
 }
 
 const RegisterForm = () => {
@@ -50,14 +49,13 @@ const RegisterForm = () => {
       return;
     }
 
-    const payload: IUser & { role: string; phone?: string; profileImage?: File } = {
+const payload: IUser & { role: string; phone?: string } = {
   name: data.username,
   email: data.email,
   password: data.password,
   role: data.role,
   phone: data.phone,
-  profileImage: data.profileImage || undefined,
-  status: "pending",                  
+  status: "pending",
   createdAt: new Date().toISOString(),
 };
 

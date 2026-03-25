@@ -8,15 +8,19 @@ import {
   Settings, 
   ChevronLeft, 
   Bell,
-  Search
+  Search,
+  User
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import Logo from "@/components/common/Logo";
+import { useSession } from "next-auth/react";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   const navItems = [
     { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
@@ -27,6 +31,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="flex h-screen bg-[#f8fafc] text-slate-900 font-sans">
+      {/* Sidebar */}
       <aside
         className={`relative flex flex-col bg-white border-r border-slate-200 transition-all duration-500 ease-in-out ${
           isCollapsed ? "w-20" : "w-72"
@@ -39,14 +44,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           <ChevronLeft className={`w-4 h-4 transition-transform duration-500 ${isCollapsed ? "rotate-180" : ""}`} />
         </button>
         <div className="h-20 flex items-center px-6 mb-4">
-          <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shrink-0 shadow-indigo-200 shadow-lg">
-            <span className="text-white font-bold text-xl">L</span>
-          </div>
-          {!isCollapsed && (
-            <span className="ml-4 font-bold text-xl tracking-tight text-slate-800 animate-in fade-in duration-500">
-              Learn<span className="text-indigo-600">Hub</span>
-            </span>
-          )}
+          {!isCollapsed && <Logo />}
         </div>
         <nav className="flex-1 px-4 space-y-2">
           {navItems.map((item) => {
@@ -84,9 +82,12 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
         )}
       </aside>
+
+      {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        
+        {/* Header */}
         <header className="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-8 sticky top-0 z-10">
+          {/* Search */}
           <div className="flex items-center bg-slate-100 rounded-full px-4 py-2 w-96 group focus-within:ring-2 ring-indigo-500/20 transition-all">
             <Search className="w-4 h-4 text-slate-400" />
             <input 
@@ -96,33 +97,45 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             />
           </div>
 
+          {/* Right Section */}
           <div className="flex items-center gap-6">
             <button className="relative text-slate-400 hover:text-slate-600 transition-colors">
               <Bell className="w-6 h-6" />
               <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
             </button>
             <div className="h-8 w-[1px] bg-slate-200 mx-2" />
+
+            {/* User Avatar + Name + Role */}
             <div className="flex items-center gap-3 cursor-pointer group">
+              {session?.user?.image ? (
+                <Image
+                  src={session.user.image}
+                  alt={session.user.name || "Avatar"}
+                  width={36}
+                  height={36}
+                  className="rounded-full ring-2 ring-transparent group-hover:ring-indigo-500 transition-all"
+                />
+              ) : (
+                <User className="w-9 h-9 text-gray-400 border rounded-full p-1" />
+              )}
+
               <div className="text-right hidden sm:block">
-                <p className="text-sm font-bold text-slate-800">Alex Rivers</p>
-                <p className="text-xs text-slate-500">Administrator</p>
+                <p className="text-sm font-bold text-slate-800">
+                  {session?.user?.name || "Unknown User"}
+                </p>
+                <p className="text-xs text-slate-500">
+                  {session?.user?.role || "Role"}
+                </p>
               </div>
-              <Image
-                src="https://ui-avatars.com/api/?name=Alex+Rivers&background=6366f1&color=fff" 
-                alt="Avatar" 
-                width={10}
-                height={10}
-                className="rounded-full ring-2 ring-transparent group-hover:ring-indigo-500 transition-all"
-              />
             </div>
           </div>
         </header>
+
         <main className="p-8 overflow-y-auto scrollbar-hide">
           <div className="max-w-7xl mx-auto">
             {children}
           </div>
         </main>
-
       </div>
     </div>
   );

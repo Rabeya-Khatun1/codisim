@@ -1,8 +1,8 @@
 import Footer from '@/components/shared/Footer';
 import Navbar from '@/components/shared/Navbar';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
-const Home = ({children}) => {
+const Home: React.FC<{ children: ReactNode }> = ({ children }) => {
     return (
         <>
           <header><Navbar></Navbar></header>
