@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import CourseSkeleton from "../skeletons/CourseDetailsSkeletons";
 import { getCourses } from "@/lib/db/courses";
+import CourseCard from "../cards/CourseCard";
 
 interface Course {
   _id: string;
@@ -71,45 +72,14 @@ const Courses = () => {
 
         {/* Courses Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
   {loading
-    ? Array.from({ length: 8 }).map((_, i) => <CourseSkeleton key={i} ></CourseSkeleton>)
-    : courses.map((course) => (
-            <div key={course._id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
-              <div className="relative h-40">
-                <Image
-                  src={course.image}
-                  alt={course.title}
-                  width={500}
-                  height={300}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute top-4 left-4 flex gap-2">
-                  <span className="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-                    {course.level}
-                  </span>
-                </div>
-                <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm flex items-center gap-1">
-                  <span>{course.duration}</span>
-                  <Clock size={14} />
-                </div>
-              </div>
-              <div className="p-4">
-                <div className="flex items-center gap-1 mb-2">
-                  {renderStars(course.rating)}
-                  <span className="text-sm text-gray-600 ml-1">({course.rating})</span>
-                </div>
-                <h3 className="font-bold text-lg mb-1">{course.title}</h3>
-                <p className="text-gray-500 text-sm mb-2">{course.instructor}</p>
-                <div className="flex justify-between items-center">
-                  <span className="font-bold">{course.price}</span>
-                 <Link href={`/courses/${course._id}`}>
-                  <Button className="flex items-center gap-1 text-sm px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700">
-                    <PlayCircle size={16} /> View
-                  </Button></Link>
-                </div>
-              </div>
-            </div>
-          ))}
+  ? Array.from({ length: 8 }).map((_, i) => (
+      <CourseSkeleton key={i} />
+    ))
+  : courses.map((course) => (
+      <CourseCard key={course._id} course={course} />
+    ))}
         </div>
 
         {/* Pagination */}
