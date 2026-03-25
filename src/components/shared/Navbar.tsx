@@ -64,15 +64,7 @@ const Navbar = () => {
                   className="flex items-center gap-2 cursor-pointer"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >
-                  {session?.user?.image ? (
-                    <Image
-                      src={session.user.image}
-                      alt="profile"
-                      width={40}
-                      height={40}
-                      className="rounded-full border"
-                    />
-                  ) : (
+                  {session && (
                     <User
                       size={40}
                       className="text-gray-400 border rounded-full p-1"

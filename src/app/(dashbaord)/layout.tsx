@@ -107,15 +107,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
             {/* User Avatar + Name + Role */}
             <div className="flex items-center gap-3 cursor-pointer group">
-              {session?.user?.image ? (
-                <Image
-                  src={session.user.image}
-                  alt={session.user.name || "Avatar"}
-                  width={36}
-                  height={36}
-                  className="rounded-full ring-2 ring-transparent group-hover:ring-indigo-500 transition-all"
-                />
-              ) : (
+              {session &&(
                 <User className="w-9 h-9 text-gray-400 border rounded-full p-1" />
               )}
 

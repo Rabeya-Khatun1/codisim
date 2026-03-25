@@ -6,7 +6,6 @@ import { useState } from "react";
 import Button from "../buttons/Button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 interface RegisterFormData {
   username: string;
@@ -19,29 +18,14 @@ interface RegisterFormData {
 
 const RegisterForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const router = useRouter();
 
   const {
     register,
     handleSubmit,
     reset,
-    setValue,
-    watch,
     formState: { errors },
-  } = useForm<RegisterFormData>({
-    defaultValues: {
-      profileImage: null,
-    },
-  });
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setPreviewImage(URL.createObjectURL(file));
-    setValue("profileImage", file);
-  };
+  } = useForm<RegisterFormData>({});
 
   const onSubmit = async (data: RegisterFormData) => {
     if (data.password !== data.confirmPassword) {
@@ -49,15 +33,15 @@ const RegisterForm = () => {
       return;
     }
 
-const payload: IUser & { role: string; phone?: string } = {
-  name: data.username,
-  email: data.email,
-  password: data.password,
-  role: data.role,
-  phone: data.phone,
-  status: "pending",
-  createdAt: new Date().toISOString(),
-};
+    const payload: IUser & { role: string; phone?: string } = {
+      name: data.username,
+      email: data.email,
+      password: data.password,
+      role: data.role,
+      phone: data.phone,
+      status: "pending",
+      createdAt: new Date().toISOString(),
+    };
 
     setIsSubmitting(true);
     try {
@@ -66,7 +50,6 @@ const payload: IUser & { role: string; phone?: string } = {
 
       if (result.success) {
         reset();
-        setPreviewImage(null);
         router.push("/login");
       }
     } catch (error) {
@@ -92,7 +75,6 @@ const payload: IUser & { role: string; phone?: string } = {
 
       {/* Form Content */}
       <div className="p-8 grid gap-6">
-
         {/* Username + Email */}
         <div className="grid gap-6 md:grid-cols-2">
           {/* Username */}
@@ -155,33 +137,6 @@ const payload: IUser & { role: string; phone?: string } = {
             </select>
             {errors.role && <p className="text-red-500 text-xs mt-1">{errors.role.message}</p>}
           </div>
-        </div>
-
-        {/* Profile Image */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Profile Image</label>
-          <label className="w-full h-48 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:border-primary hover:bg-primary/10 transition-colors">
-            {previewImage ? (
-                <Image
-    src={previewImage}
-    alt="Profile Preview"
-    width={128}
-    height={128}
-    className="rounded-full object-cover border-2 border-gray-200"
-  />
-            ) : (
-              <span className="text-gray-400 text-sm">Click or drag to upload</span>
-            )}
-            <input
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleImageChange}
-            />
-          </label>
-          {previewImage && (
-            <p className="text-xs text-gray-500 mt-2">Click box to change image</p>
-          )}
         </div>
 
         {/* Password + Confirm Password */}
