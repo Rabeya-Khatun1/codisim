@@ -4,7 +4,6 @@ import { signIn } from "next-auth/react";
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useSession, signOut } from "next-auth/react";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -33,8 +32,6 @@ const LoginForm = () => {
       router.push("/dashboard");
     }
   };
-
-  const { data: session } = useSession();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4 pt-32">

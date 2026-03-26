@@ -4,7 +4,11 @@ import React from 'react';
 
 const CoursesPage = () => {
     return (
-<Courses></Courses>
+<Courses 
+  showPagination={true}
+  showFilter={true}
+  title="All Courses"
+/>
     );
 };
 

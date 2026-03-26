@@ -12,7 +12,6 @@ import {
 } from 'lucide-react';
 
 const Features = () => {
-  // আপনার কাস্টম কালার
   const primaryColor = "#FFC570";
 
   const features = [
@@ -61,7 +60,7 @@ const Features = () => {
   ];
 
   return (
-    <section className="py-24 px-6 bg-white text-slate-900 relative">
+    <section className="pt-20 px-6 bg-white text-slate-900 relative">
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Header */}

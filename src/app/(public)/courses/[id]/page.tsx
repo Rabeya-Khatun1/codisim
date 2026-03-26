@@ -18,7 +18,7 @@ const CourseDetails = async ({ params }: Props) => {
   return (
     <div className=" min-h-screen bg-white dark:bg-[#08090a] text-slate-900 dark:text-slate-100 font-sans selection:bg-blue-500 selection:text-white">
 
-      <div className="max-w-7xl mx-auto px-6 pt-32 pb-20">
+      <div className="max-w-7xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
           
           {/* Left Column: Course Content (8/12) */}

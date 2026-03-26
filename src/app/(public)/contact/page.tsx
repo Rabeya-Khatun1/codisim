@@ -4,7 +4,7 @@ import { Mail, Phone, MapPin, Send, MessageSquare } from 'lucide-react';
 
 const Contact = () => {
     return (
-        <section className="pt-32 pb-16 px-6 bg-white" id="contact">
+        <section className="py-20 px-6 bg-white" id="contact">
             <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
                     

@@ -4,7 +4,7 @@ import React from 'react';
 
 const Hero = () => {
     return (
-          <section className="pt-32 pb-20 px-6 bg-gradient-to-br from-slate-50 via-white to-slate-50">
+          <section className="py-20 px-6 bg-gradient-to-br from-slate-50 via-white to-slate-50">
                <div className="max-w-7xl mx-auto">
                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                    {/* Left Side: Hero Content */}

@@ -40,6 +40,7 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        console.log("credentials is", credentials)
         if (!credentials?.email || !credentials?.password) return null;
 
         const userCollections = await dbConnect<IUser>(collections.USERS);

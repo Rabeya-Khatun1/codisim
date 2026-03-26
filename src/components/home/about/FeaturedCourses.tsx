@@ -12,7 +12,7 @@ const FeaturedCourses = () => {
 
   
     return (
-            <section className="py-24 px-6 bg-white">
+            <section className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h4 className="text-[#FFC570] font-bold tracking-widest uppercase text-sm mb-3">Popular Courses</h4>

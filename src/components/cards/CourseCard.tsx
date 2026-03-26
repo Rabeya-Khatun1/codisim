@@ -8,7 +8,7 @@ import Button from "../buttons/Button";
 interface Course {
   _id: string;
   title: string;
-  price: string;
+  price: number;
   instructor: string;
   rating: number;
   duration: string;
