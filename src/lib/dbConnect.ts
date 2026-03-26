@@ -16,6 +16,7 @@ if (!dbName) {
 export const collections = {
   USERS: "users",
   COURSES: "courses",
+  REVIEWS: "reviews",
 } as const;
 
 // MongoDB client
