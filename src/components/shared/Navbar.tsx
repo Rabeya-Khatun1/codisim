@@ -18,14 +18,16 @@ import Button from "../buttons/Button";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import Logo from "../common/Logo";
-import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  const pathname = usePathname();
 
   const { data: session, status } = useSession();
+  const isActive = (href: string) => pathname === href;
 
   const navLinks = [
     { name: "Home", href: "/", icon: <Home size={18} /> },
@@ -43,16 +45,27 @@ const Navbar = () => {
 
           {/* Desktop */}
           <div className="hidden md:flex items-center space-x-10">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="flex items-center gap-2 text-gray-600 hover:text-[#FFC570]"
-              >
-                {link.icon}
-                {link.name}
-              </Link>
-            ))}
+{navLinks.map((link) => (
+  <Link
+    key={link.name}
+    href={link.href}
+    className={`relative flex items-center gap-2 transition-all duration-300 ${
+      pathname === link.href
+        ? "text-[#FFC570]"
+        : "text-gray-600 hover:text-[#FFC570]"
+    }`}
+  >
+    {link.icon}
+    {link.name}
+
+    {/* underline */}
+    <span
+      className={`absolute left-0 -bottom-1 h-[2px] bg-[#FFC570] transition-all duration-300 ${
+        pathname === link.href ? "w-full" : "w-0"
+      }`}
+    />
+  </Link>
+))}
 
             {/* Auth Section */}
             {status === "loading" ? (

@@ -12,8 +12,10 @@ import {
   Play,
   Download,
 } from "lucide-react";
+import Link from "next/link";
+import CourseCard from "@/components/cards/CourseCard";
 
-export default function CourseClient({ course }: any) {
+export default function CourseClient({ course , related}: any) {
   const [showReview, setShowReview] = useState(false);
   const [reviews, setReviews] = useState<any[]>([]);
 
@@ -41,6 +43,8 @@ export default function CourseClient({ course }: any) {
 
     return () => window.removeEventListener("popstate", handleBack);
   }, []);
+
+  console.log("RELATED:", related);
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#08090a] text-slate-900 dark:text-slate-100 font-sans selection:bg-blue-500 selection:text-white">
@@ -186,7 +190,7 @@ export default function CourseClient({ course }: any) {
 
         </div>
       </div>
-<div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-1">
+<div className=" px-12 grid gap-6 md:grid-cols-2 lg:grid-cols-1">
   {reviews.map((r: any) => (
     <div
       key={r._id}
@@ -242,6 +246,40 @@ export default function CourseClient({ course }: any) {
       </div>
     </div>
   ))}
+</div>
+<div className="max-w-7xl mx-auto px-6 py-10">
+  <div className="flex items-end justify-between mb-8">
+    <div>
+      <h2 className="text-3xl font-black tracking-tight">
+        Related Courses
+      </h2>
+      <p className="text-sm opacity-60 mt-1">
+        Handpicked based on this category
+      </p>
+    </div>
+
+    <span className="text-xs px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold">
+      {related.length} courses
+    </span>
+  </div>
+
+<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+  {related.map((c: any) => (
+    <CourseCard
+      key={c._id}
+      course={{
+        _id: c._id,
+        title: c.title,
+        price: c.price,
+        instructor: c.instructor || "Unknown",
+        rating: c.rating || 4.5,
+        duration: c.duration || "3h",
+        level: c.level || "Beginner",
+        image: c.image,
+      }}
+    />
+  ))}
+</div>
 </div>
       {/* MODAL */}
       {showReview && (
