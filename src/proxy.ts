@@ -12,6 +12,9 @@ export async function proxy(request: NextRequest) {
   if (pathname.startsWith("/courses/") && !token) {
   return NextResponse.redirect(new URL("/login", request.url));
 }
+  if (pathname.startsWith("/enroll%now/") && !token) {
+  return NextResponse.redirect(new URL("/login", request.url));
+}
 
   if (pathname === "/login" && token) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
@@ -21,5 +24,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/courses/:path*", "/dashboard/:path*", "/login"],
+  matcher: ["/courses/:path*", "/dashboard/:path*", "/login", "/enroll%now/:path*"],
 };

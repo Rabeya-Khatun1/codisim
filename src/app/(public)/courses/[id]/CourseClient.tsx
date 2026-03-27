@@ -14,10 +14,12 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import CourseCard from "@/components/cards/CourseCard";
+import { useRouter } from "next/navigation";
 
 export default function CourseClient({ course , related}: any) {
   const [showReview, setShowReview] = useState(false);
   const [reviews, setReviews] = useState<any[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
   const fetchReviews = async () => {
@@ -144,7 +146,7 @@ export default function CourseClient({ course , related}: any) {
                   </div>
                 </div>
 
-                <button className="w-full group relative overflow-hidden bg-blue-600 hover:bg-blue-700 text-white py-5 rounded-2xl font-bold text-lg transition-all active:scale-[0.98]">
+                <button onClick={() => router.push(`/enroll%now/${course._id}`)} className="w-full group relative overflow-hidden bg-blue-600 hover:bg-blue-700 text-white py-5 rounded-2xl font-bold text-lg transition-all active:scale-[0.98]">
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     Enroll Today
                     <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
