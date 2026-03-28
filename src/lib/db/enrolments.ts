@@ -3,9 +3,10 @@
 import { getServerSession } from "next-auth";
 import { collections, dbConnect } from "../dbConnect";
 import { authOptions } from "../authOptions";
+import { ObjectId } from "mongodb";
 
 export interface IEnrollment {
-  _id?: string;
+  _id?: string | ObjectId;
   courseId: string;
   courseName: string;
   price: string;
@@ -82,5 +83,65 @@ export const getMyEnrollments = async (): Promise<IServerResponse> => {
   } catch (error) {
     console.error("Fetch Error:", error);
     return { success: false, message: "Failed to fetch data", data: [] };
+  }
+};
+
+export const getEnrollments = async () => {
+  try {
+    const result = await enrollmentCollection
+      .find({})
+      .sort({ createdAt: -1 }) // latest first
+      .toArray();
+
+    return {
+      success: true,
+      data: result,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      data: [],
+      message: "Failed to fetch enrollments",
+    };
+  }
+};
+
+
+type UpdateEnrollmentResponse = {
+  success: boolean;
+  message: string;
+};
+
+export const updateEnrollmentStatus = async (
+  id: string,
+  newStatus: "pending" | "approved" | "rejected"
+): Promise<UpdateEnrollmentResponse> => {
+  try {
+    const result = await enrollmentCollection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { status: newStatus } }
+    );
+
+    if (result.modifiedCount > 0) {
+      return {
+        success: true,
+        message: `Enrollment has been ${newStatus} successfully!`,
+      };
+    }
+
+    return {
+      success: false,
+      message: "No changes were made. The status might be the same.",
+    };
+  } catch (error: unknown) {
+    console.error("Database Error:", error);
+
+    return {
+      success: false,
+      message:
+        error instanceof Error
+          ? error.message
+          : "Internal Server Error occurred.",
+    };
   }
 };

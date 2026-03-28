@@ -33,13 +33,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     if (role === "admin") {
 
       items.push(
-        { name: "Courses", href: "/dashboard/courses", icon: BookOpen },
+        { name: "Enrollments", href: "/dashboard/admin/enrollments", icon: BookOpen },
         { name: "Users", href: "/dashboard/users", icon: Users }
       );
     } else {
       items.push(
         { name: "My Enrollments", href: "/dashboard/student/my-enrollments", icon: GraduationCap },
-        { name: "Payments", href: "/dashboard/payments", icon: CreditCard }
+        { name: "My Payments", href: "/dashboard/student/my-payments", icon: CreditCard }
       );
     }
     items.push({ name: "Settings", href: "/dashboard/settings", icon: Settings });
