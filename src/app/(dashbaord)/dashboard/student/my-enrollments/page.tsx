@@ -1,7 +1,9 @@
 export const dynamic = "force-dynamic";
 import { getMyEnrollments } from "@/lib/db/enrolments";
 import { Clock, CheckCircle, XCircle, CreditCard, GraduationCap } from "lucide-react";
-import EnrollmentActions from "./EnrollmentActions"; // path adjust koro
+import EnrollmentActions from "./EnrollmentActions"; 
+
+
 
 export default async function MyEnrollmentsPage() {
   const response = await getMyEnrollments();

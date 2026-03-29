@@ -18,6 +18,7 @@ import { usePathname } from "next/navigation";
 import Logo from "@/components/common/Logo";
 import { useSession } from "next-auth/react";
 import { useRole } from "@/hooks/useRole";
+import NotificationBell from "@/components/ui/NotificationBell";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -42,7 +43,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         { name: "My Payments", href: "/dashboard/student/my-payments", icon: CreditCard }
       );
     }
-    items.push({ name: "Settings", href: "/dashboard/settings", icon: Settings });
+    items.push({ name: "Settings", href: "/dashboard/profile-settings", icon: Settings });
     
     return items;
   }, [role]);
@@ -124,10 +125,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
 
           <div className="flex items-center gap-6">
-            <button className="relative text-slate-400 hover:text-slate-600 transition-colors">
-              <Bell className="w-6 h-6" />
-              <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-            </button>
+          <NotificationBell userEmail={session?.user?.email || ""} />
             <div className="h-8 w-[1px] bg-slate-200 mx-2" />
 
             <div className="flex items-center gap-3 cursor-pointer group">

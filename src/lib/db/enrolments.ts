@@ -112,36 +112,45 @@ type UpdateEnrollmentResponse = {
   message: string;
 };
 
+
 export const updateEnrollmentStatus = async (
   id: string,
   newStatus: "pending" | "approved" | "rejected"
 ): Promise<UpdateEnrollmentResponse> => {
   try {
+    const enrollmentCollection = await dbConnect<IEnrollment>(collections.ENROLLMENTS);
+    const notificationCollection = await dbConnect(collections.NOTIFICATIONS); 
+    const enrollment = await enrollmentCollection.findOne({ _id: new ObjectId(id) });
+    
+    if (!enrollment) {
+      return { success: false, message: "Enrollment not found" };
+    }
+
     const result = await enrollmentCollection.updateOne(
       { _id: new ObjectId(id) },
       { $set: { status: newStatus } }
     );
 
     if (result.modifiedCount > 0) {
+      if (newStatus === "approved") {
+        await notificationCollection.insertOne({
+          userId: enrollment.email,
+          message: `Congratulations! Your enrollment for ${enrollment.courseName} has been approved. Please complete your payment.`,
+          type: "APPROVAL",
+          isRead: false,
+          link: "/dashboard/student/my-enrollments", 
+          createdAt: new Date().toISOString(),
+        });
+      }
+
       return {
         success: true,
         message: `Enrollment has been ${newStatus} successfully!`,
       };
     }
 
-    return {
-      success: false,
-      message: "No changes were made. The status might be the same.",
-    };
+    return { success: false, message: "No changes were made." };
   } catch (error: unknown) {
-    console.error("Database Error:", error);
-
-    return {
-      success: false,
-      message:
-        error instanceof Error
-          ? error.message
-          : "Internal Server Error occurred.",
-    };
+return { success: false, message: "No changes were made." };  
   }
 };

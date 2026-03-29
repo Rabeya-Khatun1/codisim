@@ -16,6 +16,7 @@ export const collections = {
   REVIEWS: "reviews",
   ENROLLMENTS: "enrolments",
   PAYMENTS: "payments",
+  NOTIFICATIONS: "notifications",
 } as const;
 
 const client = new MongoClient(uri, {
