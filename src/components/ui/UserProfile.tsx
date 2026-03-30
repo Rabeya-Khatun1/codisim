@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { User, LogOut, LayoutDashboard, ChevronDown, Bell } from 'lucide-react';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
-import Image from 'next/image';
 import NotificationBell from './NotificationBell'; 
 
 const UserProfile = () => {
@@ -25,9 +24,7 @@ const UserProfile = () => {
         >
           {/* Avatar Area */}
           <div className="w-10 h-10 rounded-full border-2 border-indigo-50 overflow-hidden bg-indigo-50 flex items-center justify-center transition-transform group-hover:scale-105">
-            {session?.user?.image ? (
-              <Image src={session.user.image} alt="User" width={40} height={40} className="object-cover" />
-            ) : (
+            {session && (
               <User size={20} className="text-indigo-600" />
             )}
           </div>

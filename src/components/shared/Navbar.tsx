@@ -20,7 +20,7 @@ import UserProfile from "../ui/UserProfile";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
-  const { status } = useSession();
+  const {data:session, status } = useSession();
 
   const navLinks = [
     { name: "Home", href: "/", icon: <Home size={20} /> },

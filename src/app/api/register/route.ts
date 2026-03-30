@@ -12,6 +12,7 @@ export interface IUser {
   status: string;
   createdAt: string;
   role: string;
+  phone: string;
 }
 
 interface IServerResponse {

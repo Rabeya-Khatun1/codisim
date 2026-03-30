@@ -14,7 +14,8 @@ import {
   CreditCard,
   ReceiptText,
   WalletCards,
-  LayoutGrid
+  LayoutGrid,
+  Settings2Icon
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -66,8 +67,18 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     name: "Transaction History", 
     href: "/dashboard/admin/transaction-history", 
     icon: ReceiptText 
+  },
+  { 
+    name: "Privacy Settings", 
+    href: "/dashboard/admin/privacy-settings", 
+    icon: Settings2Icon
   }
 );
+    } else if(role === "teacher"){
+  items.push(
+        { name: "My Courses", href: "/dashboard/student/my-courses", icon: GraduationCap },
+        { name: "Student Payments", href: "/dashboard/student/student-payments", icon: CreditCard }
+      );
     } else {
       items.push(
         { name: "My Enrollments", href: "/dashboard/student/my-enrollments", icon: GraduationCap },
