@@ -35,7 +35,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
       items.push(
         { name: "Enrollments", href: "/dashboard/admin/enrollments", icon: BookOpen },
-        { name: "Users", href: "/dashboard/users", icon: Users }
+        { name: "Users Management", href: "/dashboard/admin/users", icon: Users }
       );
     } else {
       items.push(

@@ -11,7 +11,6 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
     }
 
-    // বডি থেকে সব ডেটা নেওয়া হচ্ছে
     const { name, image, cover, bio, phone } = await req.json();
 
     const userCollection = await dbConnect(collections.USERS);
@@ -21,10 +20,10 @@ export async function PATCH(req: Request) {
       {
         $set: {
           name,
-          image,   // প্রোফাইল ফটো URL
-          cover,   // কভার ফটো URL
-          bio,     // বায়ো বা ডিটেইলস
-          phone,   // ফোন নম্বর
+          image, 
+          cover, 
+          bio,   
+          phone, 
         },
       }
     );
@@ -33,5 +32,25 @@ export async function PATCH(req: Request) {
   } catch (error) {
     console.error(error);
     return NextResponse.json({ success: false }, { status: 500 });
+  }
+}
+
+
+export async function GET(req: Request) {
+  try {
+    const userCollection = await dbConnect(collections.USERS);
+
+    const users = await userCollection.find().toArray();
+
+    return NextResponse.json({
+      success: true,
+      data: users,
+    });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { success: false },
+      { status: 500 }
+    );
   }
 }
