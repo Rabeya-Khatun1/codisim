@@ -4,19 +4,21 @@ import { NextResponse } from "next/server";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export async function POST(req: Request) {
-  const { enrollmentId } = await req.json();
+  const { enrollmentId , userEmail, courseName} = await req.json();
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     mode: "payment",
-
+    customer_email: userEmail,
+metadata: {
+      enrollmentId: enrollmentId,
+      course_name: courseName, // ETAI DORKAR HISTORY-R JONNO
+    },
     line_items: [
       {
         price_data: {
           currency: "usd",
-          product_data: {
-            name: "Course Payment",
-          },
+        product_data: { name: courseName || "Course Payment" },
           unit_amount: 5000,
         },
         quantity: 1,

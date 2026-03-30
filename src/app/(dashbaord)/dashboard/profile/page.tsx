@@ -1,4 +1,4 @@
-import ProfileSettings from "@/components/dashboard/ProfileSettings";
+import ProfileSettings from "@/app/(dashbaord)/dashboard/profile/ProfileSettings";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import { dbConnect, collections } from "@/lib/dbConnect";

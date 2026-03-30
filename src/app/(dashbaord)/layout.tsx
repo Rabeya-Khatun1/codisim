@@ -11,7 +11,10 @@ import {
   Search,
   User,
   GraduationCap,
-  CreditCard
+  CreditCard,
+  ReceiptText,
+  WalletCards,
+  LayoutGrid
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -34,9 +37,37 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     if (role === "admin") {
 
       items.push(
-        { name: "Enrollments", href: "/dashboard/admin/enrollments", icon: BookOpen },
-        { name: "Users Management", href: "/dashboard/admin/users", icon: Users }
-      );
+  { 
+    name: "Enrollments", 
+    href: "/dashboard/admin/enrollments", 
+    icon: GraduationCap 
+  },
+  { 
+    name: "Users Management", 
+    href: "/dashboard/admin/users", 
+    icon: Users 
+  },
+  { 
+    name: "Course Management", 
+    href: "/dashboard/admin/course-management", 
+    icon: BookOpen 
+  },
+  { 
+    name: "Category Management", 
+    href: "/dashboard/admin/category-manager", 
+    icon: LayoutGrid 
+  },
+  { 
+    name: "Payout Requests", 
+    href: "/dashboard/admin/payout-requests", 
+    icon: WalletCards 
+  },
+  { 
+    name: "Transaction History", 
+    href: "/dashboard/admin/transaction-history", 
+    icon: ReceiptText 
+  }
+);
     } else {
       items.push(
         { name: "My Enrollments", href: "/dashboard/student/my-enrollments", icon: GraduationCap },

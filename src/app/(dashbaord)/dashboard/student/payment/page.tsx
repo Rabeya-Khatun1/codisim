@@ -13,10 +13,20 @@ function PaymentContent() {
   useEffect(() => {
     const startPayment = async () => {
       try {
+
+        const infoRes = await fetch(`/api/enrollments/${enrollmentId}`);
+        const infoData = await infoRes.json();
+        console.log("infodata is", infoData)
+
+        if (!infoData.success) {
+          router.push("/dashboard/student/payment/payment-error");
+          return;
+        }
         const res = await fetch("/api/payment/checkout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ enrollmentId }),
+          body: JSON.stringify({ enrollmentId,courseName: infoData.data.courseName, 
+            userEmail: infoData.data.studentEmail }),
         });
 
         const data = await res.json();

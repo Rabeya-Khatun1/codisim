@@ -24,16 +24,17 @@ export async function POST(req: Request) {
 
     const session = await stripe.checkout.sessions.retrieve(transactionId);
 
- const paymentData = {
-      enrollmentId: new ObjectId(enrollmentId),
-      transactionId,
-      amount: session.amount_total,
-      currency: session.currency,
-      paymentMethod: "stripe",
-      email: session.customer_email,
-      status: session.payment_status,
-      createdAt: new Date(),
-    };
+const paymentData = {
+  enrollmentId: new ObjectId(enrollmentId),
+  transactionId,
+  amount: session.amount_total, 
+  currency: session.currency,
+  paymentMethod: "stripe",
+  email: session.customer_email,
+  courseName: session.metadata?.course_name, // Metadata theke course name niben
+  status: session.payment_status,
+  createdAt: new Date(),
+};
 
     await paymentCollection.insertOne(paymentData);
 
