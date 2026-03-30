@@ -43,7 +43,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         { name: "My Payments", href: "/dashboard/student/my-payments", icon: CreditCard }
       );
     }
-    items.push({ name: "Settings", href: "/dashboard/profile-settings", icon: Settings });
+    items.push({ name: "Settings", href: "/dashboard/profile", icon: Settings });
     
     return items;
   }, [role]);

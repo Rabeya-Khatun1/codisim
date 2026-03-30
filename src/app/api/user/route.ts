@@ -1,29 +1,37 @@
 import { dbConnect, collections } from "@/lib/dbConnect";
+import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
-import { NextResponse } from "next/server";
 
 export async function PATCH(req: Request) {
   try {
     const session = await getServerSession(authOptions);
+
     if (!session?.user?.email) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
     }
 
-    const { name, phone } = await req.json();
+    // বডি থেকে সব ডেটা নেওয়া হচ্ছে
+    const { name, image, cover, bio, phone } = await req.json();
+
     const userCollection = await dbConnect(collections.USERS);
 
-    const result = await userCollection.updateOne(
+    await userCollection.updateOne(
       { email: session.user.email },
-      { $set: { name, phone } }
+      {
+        $set: {
+          name,
+          image,   // প্রোফাইল ফটো URL
+          cover,   // কভার ফটো URL
+          bio,     // বায়ো বা ডিটেইলস
+          phone,   // ফোন নম্বর
+        },
+      }
     );
 
-    if (result.modifiedCount > 0 || result.matchedCount > 0) {
-      return NextResponse.json({ success: true, message: "Profile updated" });
-    }
-
-    return NextResponse.json({ success: false, message: "No changes made" });
+    return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ success: false, message: "Server Error" }, { status: 500 });
+    console.error(error);
+    return NextResponse.json({ success: false }, { status: 500 });
   }
 }
