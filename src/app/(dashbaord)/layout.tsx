@@ -22,11 +22,11 @@ import Logo from "@/components/common/Logo";
 import { useSession } from "next-auth/react";
 import { useRole } from "@/hooks/useRole";
 import NotificationBell from "@/components/ui/NotificationBell";
+import UserProfile from "@/components/ui/UserProfile";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
-  const { data: session } = useSession();
   const { role, isLoading } = useRole();
 
   const navItems = useMemo(() => {
@@ -154,25 +154,10 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
               className="bg-transparent border-none focus:ring-0 text-sm ml-2 w-full outline-none"
             />
           </div>
+      
 
-          <div className="flex items-center gap-6">
-          <NotificationBell userEmail={session?.user?.email || ""} />
-            <div className="h-8 w-[1px] bg-slate-200 mx-2" />
-
-            <div className="flex items-center gap-3 cursor-pointer group">
-              <div className="w-9 h-9 bg-indigo-100 rounded-full flex items-center justify-center">
-                 <User className="w-6 h-6 text-indigo-600" />
-              </div>
-
-              <div className="text-right hidden sm:block">
-                <p className="text-sm font-bold text-slate-800">
-                  {session?.user?.name || "Loading..."}
-                </p>
-                <p className="text-[10px] uppercase tracking-wider font-bold text-indigo-500">
-                  {role || "Guest"}
-                </p>
-              </div>
-            </div>
+          <div className="flex items-center gap-6 my-5">
+              <UserProfile></UserProfile>
           </div>
         </header>
 

@@ -8,188 +8,119 @@ import {
   Users,
   LayoutDashboard,
   LogIn,
-  LogOut,
-  Moon,
-  Sun,
-  User,
 } from "lucide-react";
 import React, { useState } from "react";
 import Button from "../buttons/Button";
 import Link from "next/link";
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Logo from "../common/Logo";
 import { usePathname } from "next/navigation";
+import UserProfile from "../ui/UserProfile";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const pathname = usePathname();
-
-  const { data: session, status } = useSession();
-  const isActive = (href: string) => pathname === href;
+  const { status } = useSession();
 
   const navLinks = [
-    { name: "Home", href: "/", icon: <Home size={18} /> },
-    { name: "Courses", href: "/courses", icon: <BookOpen size={18} /> },
-    { name: "Contact", href: "/contact", icon: <Users size={18} /> },
-    { name: "About", href: "/about", icon: <LayoutDashboard size={18} /> },
+    { name: "Home", href: "/", icon: <Home size={20} /> },
+    { name: "Courses", href: "/courses", icon: <BookOpen size={20} /> },
+    { name: "Contact", href: "/contact", icon: <Users size={20} /> },
+    { name: "About", href: "/about", icon: <LayoutDashboard size={20} /> },
   ];
 
   return (
-    <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
+    <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
       <div className="max-w-[1440px] mx-auto px-6">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Logo />
 
-          {/* Desktop */}
-          <div className="hidden md:flex items-center space-x-10">
-{navLinks.map((link) => (
-  <Link
-    key={link.name}
-    href={link.href}
-    className={`relative flex items-center gap-2 transition-all duration-300 ${
-      pathname === link.href
-        ? "text-[#FFC570]"
-        : "text-gray-600 hover:text-[#FFC570]"
-    }`}
-  >
-    {link.icon}
-    {link.name}
+          {/* Desktop - Icon on Top, Name on Bottom */}
+          <div className="hidden md:flex items-center space-x-6">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={`flex flex-col items-center justify-center min-w-[70px] py-2 transition-all duration-300 rounded-xl ${
+                  pathname === link.href
+                    ? "text-[#FFC570]"
+                    : "text-gray-500 hover:text-[#FFC570] hover:bg-orange-50/50"
+                }`}
+              >
+                <div className={`transition-transform duration-300 ${pathname === link.href ? "scale-110" : "group-hover:scale-110"}`}>
+                  {link.icon}
+                </div>
+                <span className="text-[11px] font-bold mt-1 uppercase tracking-wider">
+                  {link.name}
+                </span>
 
-    {/* underline */}
-    <span
-      className={`absolute left-0 -bottom-1 h-[2px] bg-[#FFC570] transition-all duration-300 ${
-        pathname === link.href ? "w-full" : "w-0"
-      }`}
-    />
-  </Link>
-))}
+                {/* Indicator Dot */}
+                {pathname === link.href && (
+                  <span className="absolute -bottom-1 w-1 h-1 bg-[#FFC570] rounded-full" />
+                )}
+              </Link>
+            ))}
 
             {/* Auth Section */}
-            {status === "loading" ? (
-              <div className="text-gray-400">Loading...</div>
-            ) : status === "authenticated" ? (
-              <div className="relative">
-                {/* Avatar / User Icon + Name + Role */}
-                <div
-                  className="flex items-center gap-2 cursor-pointer"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                >
-                  {session && (
-                    <User
-                      size={40}
-                      className="text-gray-400 border rounded-full p-1"
-                    />
-                  )}
-
-                  <div className="text-left">
-                    <p className="text-sm font-semibold text-gray-700">
-                      {session?.user?.name}
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      {session?.user?.role}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Dropdown */}
-                {isDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl p-3 space-y-2 z-50">
-                    <Link href="/dashboard">
-                      <div className="cursor-pointer hover:bg-gray-100 p-2 rounded-lg">
-                        Dashboard
-                      </div>
-                    </Link>
-
-                    <div
-                      onClick={() => setDarkMode(!darkMode)}
-                      className="cursor-pointer hover:bg-gray-100 p-2 rounded-lg flex items-center gap-2"
-                    >
-                      {darkMode ? <Sun size={16} /> : <Moon size={16} />}
-                      Toggle Theme
-                    </div>
-
-                    <div
-                      onClick={() => signOut({ callbackUrl: "/" })}
-                      className="cursor-pointer hover:bg-red-100 text-red-500 p-2 rounded-lg flex items-center gap-2"
-                    >
-                      <LogOut size={16} />
-                      Logout
-                    </div>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <Link href="/login">
-                <Button className="flex items-center gap-2 bg-[#FFC570] text-slate-950 px-8 py-3 rounded-2xl font-bold hover:bg-orange-400">
-                  <LogIn size={18} />
-                  Login
-                </Button>
-              </Link>
-            )}
+            <div className="pl-6 border-l border-gray-100 ml-4">
+              {status === "loading" ? (
+                <div className="h-10 w-10 bg-gray-100 animate-pulse rounded-full" />
+              ) : status === "authenticated" ? (
+                <UserProfile />
+              ) : (
+                <Link href="/login">
+                  <Button className="flex items-center gap-2 bg-[#FFC570] text-slate-950 px-7 py-3 rounded-2xl font-bold hover:bg-orange-400 shadow-sm active:scale-95 transition-all">
+                    <LogIn size={18} />
+                    Login
+                  </Button>
+                </Link>
+              )}
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <div className="md:hidden flex items-center gap-4">
+             {status === "authenticated" && <UserProfile />}
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            >
               {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Content */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white border-t">
-          <div className="px-6 py-6 space-y-4">
+        <div className="md:hidden bg-white border-t border-gray-50 shadow-2xl animate-in slide-in-from-top duration-300">
+          <div className="px-6 py-8 space-y-4">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="flex items-center gap-3 text-gray-700"
+                onClick={() => setIsMenuOpen(false)}
+                className={`flex items-center gap-4 p-4 rounded-2xl font-semibold transition-all ${
+                  pathname === link.href 
+                  ? "bg-orange-50 text-[#FFC570] shadow-inner" 
+                  : "text-gray-700 hover:bg-gray-50"
+                }`}
               >
-                {link.icon}
-                {link.name}
+                <div className="p-2 bg-white rounded-lg shadow-sm">{link.icon}</div>
+                <span className="text-lg">{link.name}</span>
               </Link>
             ))}
 
-            {/* Mobile Auth */}
-            {status === "loading" ? (
-              <div>Loading...</div>
-            ) : status === "authenticated" ? (
-              <div className="space-y-3">
-                <Link href="/dashboard">
-                  <div className="p-2 bg-gray-100 rounded-lg flex items-center gap-2">
-                    <User size={20} />
-                    Dashboard
-                  </div>
+            {!session && status !== "loading" && (
+              <div className="pt-6 border-t border-gray-100">
+                <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+                  <Button className="w-full flex items-center justify-center gap-2 bg-[#FFC570] text-slate-950 py-4 rounded-2xl font-bold shadow-md">
+                    <LogIn size={20} />
+                    Login
+                  </Button>
                 </Link>
-
-                <div
-                  onClick={() => setDarkMode(!darkMode)}
-                  className="p-2 bg-gray-100 rounded-lg flex items-center gap-2"
-                >
-                  {darkMode ? <Sun size={16} /> : <Moon size={16} />}
-                  Toggle Theme
-                </div>
-
-                <div
-                  onClick={() => signOut({ callbackUrl: "/" })}
-                  className="p-2 bg-red-100 text-red-500 rounded-lg flex items-center gap-2"
-                >
-                  <LogOut size={16} />
-                  Logout
-                </div>
               </div>
-            ) : (
-              <Link href="/login">
-                <Button className="w-full flex items-center justify-center gap-2 bg-[#FFC570] text-slate-950 py-3 rounded-xl">
-                  <LogIn size={18} />
-                  Login
-                </Button>
-              </Link>
             )}
           </div>
         </div>

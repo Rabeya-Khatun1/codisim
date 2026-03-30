@@ -22,7 +22,7 @@ const CourseCard = ({ course }: { course: Course }) => {
     [...Array(5)].map((_, i) => (
       <Star
         key={i}
-        size={16}
+        size={14}
         className={
           i < Math.floor(rating)
             ? "fill-yellow-400 text-yellow-400"
@@ -32,49 +32,48 @@ const CourseCard = ({ course }: { course: Course }) => {
     ));
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
-      
-      {/* Image */}
-      <div className="relative h-40">
+    <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-gray-100">
+      <div className="relative h-48 w-full overflow-hidden">
         <Image
           src={course.image}
           alt={course.title}
-          width={500}
-          height={300}
-          className="w-full h-full object-cover"
+          fill 
+          className="object-cover group-hover:scale-105 transition-transform duration-500"
         />
 
-        <div className="absolute top-4 left-4">
-          <span className="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+        <div className="absolute top-3 left-3">
+          <span className="bg-blue-600/90 backdrop-blur-sm text-white text-[10px] uppercase tracking-wider font-bold px-3 py-1 rounded-full">
             {course.level}
           </span>
         </div>
 
-        <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm flex items-center gap-1">
+        <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md text-white px-2 py-1 rounded-lg text-xs flex items-center gap-1">
+          <Clock size={12} />
           <span>{course.duration}</span>
-          <Clock size={14} />
         </div>
       </div>
-
-      {/* Content */}
-      <div className="p-4">
+      <div className="p-5 flex flex-col flex-1">
         <div className="flex items-center gap-1 mb-2">
           {renderStars(course.rating)}
-          <span className="text-sm text-gray-600 ml-1">
+          <span className="text-xs text-gray-500 font-medium ml-1">
             ({course.rating})
           </span>
         </div>
-
-        <h3 className="font-bold text-lg mb-1">{course.title}</h3>
-        <p className="text-gray-500 text-sm mb-2">
-          {course.instructor}
+        <h3 className="font-bold text-gray-800 text-md mb-2 line-clamp-2 leading-snug group-hover:text-blue-600 transition-colors">
+          {course.title}
+        </h3>
+        
+        <p className="text-gray-500 text-xs mb-4">
+          by <span className="font-medium text-gray-700">{course.instructor}</span>
         </p>
-
-        <div className="flex justify-between items-center">
-          <span className="font-bold">{course.price}</span>
+        <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-50">
+          <div className="flex flex-col">
+             <span className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Price</span>
+             <span className="font-black text-blue-600 text-lg">${course.price}</span>
+          </div>
 
           <Link href={`/courses/${course._id}`}>
-            <Button className="flex items-center gap-1 text-sm px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700">
+            <Button className="flex items-center gap-2 text-xs font-bold px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-blue-200 transition-all active:scale-95">
               <PlayCircle size={16} /> View
             </Button>
           </Link>
