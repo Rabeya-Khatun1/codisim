@@ -1,6 +1,34 @@
-"use client"
 import React from 'react';
 import { Mail, Phone, MapPin, Send, MessageSquare } from 'lucide-react';
+import { Metadata } from 'next';
+import ContactForm from '@/components/forms/ContactForm';
+
+export const metadata: Metadata = {
+  title: "Contact With Us",
+  description: "Get in touch with Learn Hub. We are here to help you with any questions.",
+  openGraph: {
+    title: "Contact Learn Hub",
+    description: "Send us a message and we will respond quickly.",
+    url: "https://learnhub-fawn.vercel.app/contact",
+    siteName: "Learn Hub",
+    type: "website",
+    images: [
+      {
+        url: "/public/contact.png", 
+        width: 1200,
+        height: 630,
+        alt: "Contact Learn Hub",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Learn Hub",
+    description: "We are ready to help you anytime.",
+    images: ["/public/contact.png"],
+  },
+};
+
 
 const Contact = () => {
     return (
@@ -8,7 +36,6 @@ const Contact = () => {
             <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
                     
-                    {/* Left Side: Contact Information */}
                     <div className="space-y-8">
                         <div>
                             <h2 className="text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">
@@ -55,49 +82,7 @@ const Contact = () => {
 
                     {/* Right Side: Contact Form */}
                     <div className="bg-white rounded-3xl p-8 md:p-10 shadow-2xl shadow-slate-200/50 border border-slate-100">
-                        <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                <div className="space-y-2">
-                                    <label className="text-sm font-semibold text-slate-700">Full Name</label>
-                                    <input 
-                                        type="text" 
-                                        placeholder="John Doe" 
-                                        className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:border-[#FFC570] focus:ring-4 focus:ring-[#FFC570]/10 transition-all"
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-semibold text-slate-700">Email Address</label>
-                                    <input 
-                                        type="email" 
-                                        placeholder="john@example.com" 
-                                        className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:border-[#FFC570] focus:ring-4 focus:ring-[#FFC570]/10 transition-all"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-sm font-semibold text-slate-700">Subject</label>
-                                <input 
-                                    type="text" 
-                                    placeholder="How can we help?" 
-                                    className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:border-[#FFC570] focus:ring-4 focus:ring-[#FFC570]/10 transition-all"
-                                />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-sm font-semibold text-slate-700">Message</label>
-                                <textarea 
-                                    rows={4}
-                                    placeholder="Write your message here..." 
-                                    className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:border-[#FFC570] focus:ring-4 focus:ring-[#FFC570]/10 transition-all resize-none"
-                                ></textarea>
-                            </div>
-
-                            <button className="w-full bg-[#FFC570] text-slate-950 font-bold py-4 rounded-2xl flex items-center justify-center gap-3 hover:bg-orange-400 hover:shadow-xl hover:shadow-orange-100 transition-all active:scale-[0.98]">
-                                <Send size={20} />
-                                Send Message
-                            </button>
-                        </form>
+                       <ContactForm></ContactForm>
                     </div>
 
                 </div>

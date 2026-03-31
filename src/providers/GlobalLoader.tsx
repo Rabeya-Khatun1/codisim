@@ -14,10 +14,9 @@ const GlobalLoaderProvider = ({ children }: { children: React.ReactNode }) => {
 
     return () => clearTimeout(timer);
   }, []);
-
-  return (
-    <>
-      {loading && <Loader />}
+  {loading && <Loader />}
+  return ( 
+    <> 
       {children}
     </>
   );

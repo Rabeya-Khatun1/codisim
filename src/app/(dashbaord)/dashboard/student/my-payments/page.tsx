@@ -1,6 +1,5 @@
 import { getPayments } from "@/lib/db/payment";
 import { 
-  ArrowUpRight, 
   CreditCard, 
   Calendar, 
   MoreHorizontal,

@@ -13,6 +13,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import { updateEnrollmentStatus } from "@/lib/db/enrolments";
+import AdminEnrollmentSkeleton from "@/components/skeletons/AdminEnrollment";
 
 export default function EnrollmentAdmin() {
   const [data, setData] = useState<any[]>([]);
@@ -57,6 +58,7 @@ export default function EnrollmentAdmin() {
       alert("Something went wrong!");
     }
   };
+if(loading) return <AdminEnrollmentSkeleton></AdminEnrollmentSkeleton>
 
   const getStatusStyles = (status: string) => {
     switch (status?.toLowerCase()) {

@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import { MoreVertical, UserCog, Trash2, Eye, ShieldCheck, AlertTriangle } from "lucide-react";
 
@@ -17,6 +15,7 @@ interface UserActionsProps {
 const UserActions = ({ user, onDelete, onVerify, onRoleChange, onBan }: UserActionsProps) => {
 const [isOpen, setIsOpen] = useState(false);
 const [showDeleteModal, setShowDeleteModal] = useState(false);
+
 
   return (
     <div className="relative">

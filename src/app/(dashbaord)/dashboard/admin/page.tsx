@@ -1,9 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Users, BookOpen, ShieldCheck, Plus, Loader2 } from "lucide-react";
+import { Users, BookOpen, ShieldCheck, Plus} from "lucide-react";
 import { StatsCard } from "@/components/ui/StatsCard";
 import { RevenueChart } from "@/components/ui/RevenueCharts";
+import { AdminDashboardSkeleton } from "@/components/skeletons/AdminDashboardSkeleton";
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -32,9 +33,7 @@ export default function AdminDashboard() {
   }, []);
 
   if (statsData.loading) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <Loader2 className="animate-spin text-indigo-600" size={40} />
-    </div>
+<AdminDashboardSkeleton></AdminDashboardSkeleton>
   );
 
   return (

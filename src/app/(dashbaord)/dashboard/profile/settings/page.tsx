@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Save, ArrowLeft, Camera, User, Phone, AlignLeft, Mail } from "lucide-react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import SettingsSkeleton from "@/components/skeletons/SettingsSkeleton";
 
 const Settings = () => {
   const router = useRouter();
@@ -44,7 +45,7 @@ const { data: session, status } = useSession();
   };
 
 if (status === "loading") {
-  return <p>Loading...</p>;
+  return <SettingsSkeleton></SettingsSkeleton>;
 }
 
   return (

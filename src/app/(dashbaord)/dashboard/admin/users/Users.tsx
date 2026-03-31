@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { Mail, Shield } from "lucide-react";
-import UserActions from "./UserActions"; // Import korben ekhane
+import UserActions from "./UserActions"; 
+import { UserSkeleton } from "@/components/skeletons/UserSkeleton";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -131,6 +132,8 @@ const toggleBanUser = async (id: string) => {
     alert("Something went wrong ❌");
   }
 };
+
+if(loading) return <UserSkeleton></UserSkeleton>
 
   return (
     <div className="max-w-5xl mx-auto p-8 bg-gray-50 min-h-screen">

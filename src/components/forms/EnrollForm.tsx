@@ -18,6 +18,7 @@ import {
   Tag,
 } from "lucide-react";
 import { postEnrollment } from "@/lib/db/enrolments";
+import EnrollmentSkeleton from "../skeletons/EnrollmentsSkeletons";
 const schema = z.object({
   name: z.string(),
   email: z.string().email(),
@@ -35,7 +36,7 @@ type FormData = z.infer<typeof schema>;
 export default function EnrollmentForm({ course }: { course: any}) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const {
     register,
@@ -88,6 +89,8 @@ const onSubmit = async (data: FormData) => {
     setLoading(false);
   }
 };
+
+if(status === "loading") return <EnrollmentSkeleton></EnrollmentSkeleton> 
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#020617] p-4 md:p-10 font-sans">

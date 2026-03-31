@@ -1,9 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Save, Globe, Layout, Search, Image as ImageIcon, Type } from "lucide-react";
+import { AdminSettingsSkeleton } from "@/components/skeletons/AdminSettingsSkeleton";
 
 const AdminSettings = ({ initialData }: { initialData: any }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("general");
 
   const [settings, setSettings] = useState({
@@ -15,8 +16,16 @@ const AdminSettings = ({ initialData }: { initialData: any }) => {
     keywords: initialData?.keywords || "",
   });
 
+
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setLoading(false);
+  }, 800); 
+
+  return () => clearTimeout(timer);
+}, []);
+
   const handleSave = async () => {
-    setLoading(true);
     try {
       const res = await fetch("/api/admin/settings", {
         method: "PATCH",
@@ -30,6 +39,8 @@ const AdminSettings = ({ initialData }: { initialData: any }) => {
       setLoading(false);
     }
   };
+
+  if(loading) return <AdminSettingsSkeleton></AdminSettingsSkeleton>
 
   return (
     <div className="max-w-5xl mx-auto p-6">

@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { CreditCard, Search, ExternalLink, ArrowDownCircle, User, BookOpen, Calendar } from "lucide-react";
+import { CreditCard, Search,User, BookOpen, Calendar } from "lucide-react";
+import { TransactionSkeleton } from "@/components/skeletons/TransactionSkeleton";
 
 export const TransactionHistory = () => {
   const [transactions, setTransactions] = useState<any[]>([]);
@@ -31,16 +32,12 @@ export const TransactionHistory = () => {
   );
 
   if (loading) return (
-    <div className="flex flex-col justify-center items-center h-96 space-y-4">
-      <div className="h-12 w-12 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin"></div>
-      <p className="text-slate-400 font-medium animate-pulse">Loading logs...</p>
-    </div>
+<TransactionSkeleton></TransactionSkeleton>
   );
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
       
-      {/* Search & Header Section (Standalone) */}
       <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-8 px-2">
         <div className="space-y-2">
           <div className="flex items-center gap-3">
