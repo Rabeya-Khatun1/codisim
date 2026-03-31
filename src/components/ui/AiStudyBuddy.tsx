@@ -55,7 +55,7 @@ console.log("AI RESPONSE:", data);
 
 setMessages((prev) => [
   ...prev,
-  { role: "assistant", content: data.text },
+  { role: "assistant", content: "Hello, how is your learning going? I am a bit busy right now, but you can take help from your teacher." },
 ]);
     } catch (err) {
       setMessages((prev) => [
