@@ -23,3 +23,6 @@
     color: var(--secondary);
   }
 }
+
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 10px; }

@@ -10,19 +10,46 @@ import * as z from "zod";
 import { Mail, Lock, User, Phone, Briefcase, Loader2, ArrowRight, CheckCircle2 } from "lucide-react";
 import Logo from "../common/Logo";
 
-const registerSchema = z.object({
-  username: z.string().min(3, "Min 3 characters"),
-  email: z.string().email("Invalid email"),
-  phone: z.string().min(11, "Invalid phone"),
-  role: z.enum(["student", "teacher"]),
-  password: z.string().min(6, "Min 6 characters"),
-  confirmPassword: z.string()
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "No match",
-  path: ["confirmPassword"],
-});
+const strongPasswordRegex =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{6,}$/;
+
+// 🇧🇩 + 🇺🇸 phone validation
+const phoneRegex =
+  /^(?:\+8801\d{9}|01\d{9}|\+1\d{10})$/;
+
+
+const registerSchema = z
+  .object({
+    username: z.string().min(3, "Min 3 characters"),
+    email: z.string().email("Invalid email"),
+
+    phone: z
+      .string()
+      .regex(
+        phoneRegex,
+        "Enter valid BD (+8801XXXXXXXXX / 01XXXXXXXXX) or US (+1XXXXXXXXXX) number"
+      ),
+
+    role: z.enum(["student", "teacher"]),
+
+    password: z
+      .string()
+      .min(6, "Min 6 characters")
+      .regex(
+        strongPasswordRegex,
+        "Must include uppercase, lowercase, number & symbol"
+      ),
+
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 type RegisterFormData = z.infer<typeof registerSchema>;
+
+
 
 const RegisterForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -133,17 +160,28 @@ const RegisterForm = () => {
               </div>
 
               {/* Passwords */}
-              {["password", "confirmPassword"].map((p) => (
-                <div key={p} className="relative group">
-                  <input
-                    {...register(p as any)}
-                    type="password"
-                    placeholder={p === "password" ? "Password" : "Confirm Password"}
-                    className="w-full pl-5 pr-12 py-3.5 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-[#FFC570] outline-none transition-all"
-                  />
-                  <Lock className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-[#FFC570]" size={18} />
-                </div>
-              ))}
+{["password", "confirmPassword"].map((p) => (
+  <div key={p} className="relative group">
+    <input
+      {...register(p as any)}
+      type="password"
+      placeholder={p === "password" ? "Password" : "Confirm Password"}
+      className="w-full pl-5 pr-12 py-3.5 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-[#FFC570] outline-none transition-all"
+    />
+
+    <Lock
+      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-[#FFC570]"
+      size={18}
+    />
+
+    {/* show error */}
+    {errors?.[p as keyof RegisterFormData] && (
+      <p className="text-[10px] text-red-500 mt-1 ml-2 font-bold uppercase tracking-wider">
+        {errors[p as keyof RegisterFormData]?.message}
+      </p>
+    )}
+  </div>
+))}
             </div>
 
             <button

@@ -20,15 +20,29 @@ import {
 import { postEnrollment } from "@/lib/db/enrolments";
 import EnrollmentSkeleton from "../skeletons/EnrollmentsSkeletons";
 const schema = z.object({
-  name: z.string(),
-  email: z.string().email(),
-  phone: z.string().min(11, "Valid phone number is required (min 11 digits)"),
+  name: z
+    .string()
+    .min(2, "Name must be at least 2 characters")
+    .max(50, "Name is too long")
+    .regex(/^[a-zA-Z\s]+$/, "Name can only contain letters"),
+
+  email: z.string().email("Invalid email address"),
+
+  phone: z
+    .string()
+    .min(11, "Phone number must be at least 11 digits")
+    .max(14, "Phone number is too long")
+    .regex(/^(?:\+8801|01|01[3-9])\d{8}$/, "Enter a valid BD or US phone number"),
+
   experience: z.string().min(1, "Please select your experience"),
+
   reason: z.string().min(1, "Please select a reason"),
+
   question: z.string().optional(),
+
   commitment: z.boolean().refine((val) => val === true, {
-  message: "You must commit to consistency",
-}),
+    message: "You must commit to consistency",
+  }),
 });
 
 type FormData = z.infer<typeof schema>;

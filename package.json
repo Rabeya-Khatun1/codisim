@@ -9,7 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ai-sdk/google": "^3.0.54",
     "@hookform/resolvers": "^5.2.2",
+    "ai": "^6.0.141",
     "bcryptjs": "^3.0.3",
     "framer-motion": "^12.38.0",
     "jsonwebtoken": "^9.0.3",

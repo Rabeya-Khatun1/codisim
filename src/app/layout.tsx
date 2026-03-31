@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/providers/AuthProvider";
 import GlobalLoaderProvider from "@/providers/GlobalLoader";
+import { GlobalAIBuddy } from "@/components/ui/AiStudyBuddy";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,9 +17,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://learnhub-fawn.vercel.app/"),
-    title: {
+  title: {
     default: "Learn Hub LMS Platform",
-    template: "%s | Learn Hub", 
+    template: "%s | Learn Hub",
   },
 
   description: "Learn coding easily with our LMS platform",
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://learnhub-fawn.vercel.app/",
     siteName: "Learn Hub",
-    images: "/public/homepage.png", 
+    images: "/public/homepage.png",
   },
   twitter: {
     card: "summary_large_image",
@@ -48,13 +49,17 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <AuthProvider>
-        <body >
 
-        <GlobalLoaderProvider>  <main>{children}</main></GlobalLoaderProvider>
+      <body >
+        <AuthProvider>
+          <GlobalLoaderProvider>  
+            <main>{children}</main>
+                 <GlobalAIBuddy></GlobalAIBuddy>
+          </GlobalLoaderProvider>
+     
+        </AuthProvider>
+      </body>
 
-        </body>
-      </AuthProvider>
 
     </html>
   );

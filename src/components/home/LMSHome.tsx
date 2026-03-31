@@ -7,6 +7,7 @@ import Courses from './Courses';
 import Testimonial from './Testimonial';
 import FAQ from './FAQ';
 import CTASection from './CTA';
+import ScrollToTopButton from '../buttons/ScrollToTop';
 
 interface Testimonial {
   id: number;
@@ -40,6 +41,7 @@ const LMSHomePage: React.FC = () => {
 
       {/* CTA Section */}
       <CTASection></CTASection>
+      <ScrollToTopButton></ScrollToTopButton>
     </div>
   );
 };
