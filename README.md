@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎓 LearnHub
+LearnHub হলো একটি আধুনিক লার্নিং ম্যানেজমেন্ট প্ল্যাটফর্ম, যেখানে শিক্ষার্থীরা খুব সহজে বিভিন্ন কোর্স শিখতে পারে এবং তাদের দক্ষতা বৃদ্ধি করতে পারে। এটি শেখার প্রক্রিয়াকে আরও সহজ, ইন্টারঅ্যাক্টিভ এবং আনন্দদায়ক করার জন্য তৈরি করা হয়েছে।
 
-## Getting Started
+🚀 মূল ফিচারসমূহ (Key Features)
+স্মার্ট ড্যাশবোর্ড: শিক্ষার্থী এবং ইনস্ট্রাক্টরদের জন্য আলাদা এবং সহজবোধ্য ড্যাশবোর্ড।
 
-First, run the development server:
+প্রোগ্রেস ট্র্যাকিং: শিক্ষার্থী কতটুকু শিখল তার রিয়েল-টাইম ট্র্যাকিং।
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+🛠 টেক স্ট্যাক (Tech Stack)
+এই প্রজেক্টে যে প্রযুক্তিগুলো ব্যবহার করা হয়েছে:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Frontend:  Next.js , TypeScript.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Styling: Tailwind CSS, Lucide-react
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Database: MongoDB
 
-## Learn More
+Authentication: Next Auth
 
-To learn more about Next.js, take a look at the following resources:
+AI Integration: Gemini API (কোর্স গাইডলাইন বা প্রশ্নের উত্তরের জন্য)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+📧 যোগাযোগ (Contact)
+আপনার যদি কোনো প্রশ্ন বা পরামর্শ থাকে, তবে আমাদের সাথে যোগাযোগ করতে পারেন:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Email: prorabeya2008@gmail.com
